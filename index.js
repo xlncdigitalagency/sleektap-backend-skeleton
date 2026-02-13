@@ -8,9 +8,11 @@ app.get("/", (req, res) => {
   res.send("XLNC API is running!")
 })
 
+// Get products
 app.get("/api/products", (req, res) => {
   const products = [
     {
+      id: 1,
       name: "XLNC Stand",
       slug: "xlnc-stand",
       description: "A sleek and modern stand for your devices.",
@@ -23,6 +25,7 @@ app.get("/api/products", (req, res) => {
       hasVariants: false,
     },
     {
+      id: 2,
       name: "XLNC Business Card",
       slug: "xlnc-business-card",
       description: "A stylish business card with NFC technology.",
@@ -38,6 +41,28 @@ app.get("/api/products", (req, res) => {
   res.json(products)
 })
 
+// Post products
+app.post("/api/products", (req, res) => {
+  let newProduct = req.body
+  newProduct.id = Date.now()
+  res.status(201).json(newProduct)
+})
+
+// Put products
+app.put("/api/products/:id", (req, res) => {
+  const productId = req.params.id
+  let updatedProduct = req.body
+  updatedProduct.id = productId
+  res.json(updatedProduct)
+})
+
+// Delete products
+app.delete("/api/products/:id", (req, res) => {
+  const productId = req.params.id
+  res.json({ message: `Product with id ${productId} deleted.` })
+})
+
+// Get categories
 app.get("/api/categories", (req, res) => {
   const categories = [
     {
@@ -72,6 +97,27 @@ app.get("/api/categories", (req, res) => {
     },
   ]
   res.json(categories)
+})
+
+// Post categories
+app.post("/api/categories", (req, res) => {
+  let newCategory = req.body
+  newCategory.id = Date.now()
+  res.status(201).json(newCategory)
+})
+
+// Put categories
+app.put("/api/categories/:id", (req, res) => {
+  const categoryId = req.params.id
+  let updatedCategory = req.body
+  updatedCategory.id = categoryId
+  res.json(updatedCategory)
+})
+
+// Delete categories
+app.delete("/api/categories/:id", (req, res) => {
+  const categoryId = req.params.id
+  res.json({ message: `Category with id ${categoryId} deleted.` })
 })
 
 app.listen(PORT, () => {
